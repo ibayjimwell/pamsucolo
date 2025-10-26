@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="images/logo.ico">
+    <link rel="stylesheet" href="style/output.css">
+    <title>Login - PamSuCoLo</title>
+    <style>
+        /* Inheriting styles from the Register page for consistency */
+        body { 
+            background-color: var(--color-pamsucolo-bg); 
+            color: var(--color-pamsucolo-text);
+            min-height: 100vh;
+        }
+
+        /* Custom focus ring for active inputs */
+        .custom-focus:focus {
+            outline: 2px solid transparent; 
+            outline-offset: 2px;
+            /* Note: This assumes you have --color-pamsucolo-primary-rgb defined in your CSS variables */
+            box-shadow: 0 0 0 3px var(--color-pamsucolo-primary-rgb);
+        }
+    </style>
+</head>
+<body class="bg-pamsucolo-bg text-pamsucolo-text font-sans antialiased flex flex-col">
+
+    <header class="sticky top-0 z-10 bg-white shadow-sm border-b border-gray-100">
+        <div class="max-w-xl mx-auto px-4 sm:px-6 h-16 flex items-center">
+            <button onclick="history.back()" class="p-2 text-gray-700 hover:text-pamsucolo-primary focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+            </button>
+            <h1 class="text-lg font-semibold ml-4">Student Login</h1>
+        </div>
+    </header>
+    
+    <main class="flex-grow flex items-center justify-center p-4">
+        <div class="w-full max-w-xl">
+            
+            <div class="text-center mb-8">
+                <img class="w-16 h-16 mx-auto mb-2" src="images/logo.png" alt="PamSuCoLo Logo">
+                <h2 class="text-3xl font-extrabold text-pamsucolo-primary">PamSuCoLo</h2>
+                <p class="text-gray-600 mt-1">Sign in to your student account.</p>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-xl shadow-2xl border border-gray-100">
+                
+                <form class="space-y-6">
+                    <h3 class="text-xl font-bold border-b pb-3 text-gray-800">Account Credentials</h3>
+
+                    <div>
+                        <label for="student-no" class="block text-sm font-medium text-gray-700">Student No.</label>
+                        <input type="text" id="student-no" required placeholder="Enter your Student No."
+                               class="custom-focus mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:ring-pamsucolo-primary focus:border-pamsucolo-primary text-base">
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" id="password" required placeholder="Enter your Password"
+                               class="custom-focus mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-pamsucolo-primary focus:border-pamsucolo-primary text-base">
+                        <div class="text-right mt-1">
+                             <a href="#" class="text-xs font-medium text-gray-500 hover:text-pamsucolo-primary transition">
+                                Forgot Password?
+                            </a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button onclick="window.location.href='index.html'" type="submit" class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-base font-bold text-white bg-pamsucolo-primary hover:bg-pamsucolo-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pamsucolo-primary transition">
+                            <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
+                            Log In
+                        </button>
+                    </div>
+
+                    <div class="text-center pt-2">
+                        <p class="text-sm text-gray-600">
+                            Don't have an account? 
+                            <a href="register.html" class="font-medium text-pamsucolo-primary hover:text-pamsucolo-primary/80 transition">
+                                Register here
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+    </main>
+    
+    <script>
+        // The back button uses inline JavaScript: onclick="history.back()"
+        // The submit button action would typically be handled by a backend service.
+    </script>
+
+</body>
+</html>
+

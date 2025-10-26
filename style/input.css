@@ -1,0 +1,22 @@
+/* input.css */
+
+/* 1. Tailwind Base Import */
+@import "tailwindcss";
+
+/* =====================================================
+2. TAILWIND V4 THEME CONFIGURATION (@theme)
+   - This is the correct directive to define theme values
+     like colors directly inside your CSS file.
+   - We define them as CSS custom properties following the
+     Tailwind v4 theme variable naming convention.
+=====================================================
+*/
+@theme {
+    /* Custom colors are defined using CSS custom properties 
+       (e.g., --color-namespace-name: value) 
+       This makes them available as utility classes like bg-pamsucolo-primary. 
+    */
+    --color-pamsucolo-primary: #f89458;
+    --color-pamsucolo-bg: #fefefe;
+    --color-pamsucolo-text: #333333;
+}

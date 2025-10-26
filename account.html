@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="images/logo.ico">
+    <link rel="stylesheet" href="style/output.css">
+    <title>Account - PamSuCoLo Marketplace</title>
+    <style>
+        /* Hide the filter toggle and sidebar by default (Mobile Only) */
+        #filter-toggle, #mobile-menu-toggle {
+            display: none;
+        }
+
+        /* Filter Sidebar Logic (Mobile Only) - Included for consistency */
+        #filter-sidebar {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        #filter-toggle:checked ~ #filter-sidebar {
+            transform: translateX(0);
+        }
+
+        /* Mobile Menu Drawer Logic (Mobile & Tablet) */
+        #mobile-menu-drawer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+        #mobile-menu-toggle:checked ~ #mobile-menu-drawer {
+            max-height: 500px; /* Use a large value for smooth transition */
+        }
+        
+        /* Optional: Apply your custom background color */
+        body { 
+            background-color: var(--color-pamsucolo-bg); 
+            color: var(--color-pamsucolo-text);
+        }
+
+        /* Custom style for the timeline dot */
+        .timeline-dot {
+            /* Adjust the primary color variable as needed */
+            background-color: #3b82f6; /* Example: blue-500 for Tailwind */
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-pamsucolo-bg text-pamsucolo-text font-sans antialiased">
+
+    <nav class="sticky top-0 z-40 bg-white shadow-md border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <div class="flex items-center space-x-2">
+                    <img class="w-10 h-10" src="images/logo.png" alt="Pampanga State University Logo">
+                    <a href="index.html" class="text-2xl font-bold text-pamsucolo-primary">PamSuCoLo</a>
+                </div>
+                
+                <div class="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-4">
+                    <a href="index.html" class="text-gray-900 hover:text-pamsucolo-primary px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="shop.html" class="text-gray-900 hover:text-pamsucolo-primary px-3 py-2 rounded-md text-sm font-medium">Shop</a>
+                    <a href="loan.html" class="text-gray-900 hover:text-pamsucolo-primary px-3 py-2 rounded-md text-sm font-medium">Loan</a>
+                </div>
+                
+                <div class="flex items-center space-x-2">
+                    <button onclick="window.location.href='bag.html'" type="button" class="p-2 text-gray-500 hover:text-pamsucolo-primary focus:outline-none relative">
+                        <span class="absolute -top-1 -right-1 w-4 h-4 text-xs bg-pamsucolo-primary text-white rounded-full flex items-center justify-center font-semibold">4</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-bag-icon lucide-shopping-bag"><path d="M16 10a4 4 0 0 1-8 0"/><path d="M3.103 6.034h17.794"/><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"/></svg>
+                    </button>
+                    <button onclick="window.location.href='account.html'" type="button" class="p-2 text-pamsucolo-primary focus:outline-none relative border-b-2 border-pamsucolo-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-icon lucide-user-round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+                    </button>
+                    
+                    <label for="mobile-menu-toggle" class="sm:hidden p-2 text-gray-500 hover:text-pamsucolo-primary cursor-pointer">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <h1 class="text-3xl font-bold text-pamsucolo-text mb-6 hidden sm:block">My Account</h1>
+
+        <div class="bg-pamsucolo-primary bg-opacity-90 text-white rounded-xl shadow-xl p-6 mb-8">
+            <div class="flex items-center space-x-4 mb-6">
+                <div class="w-16 h-16 sm:w-20 sm:h-20 bg-teal-500 rounded-full flex items-center justify-center text-3xl font-bold border-2 border-white">
+                    JS
+                </div>
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-extrabold">John Smith</h2>
+                    <p class="flex items-center text-sm font-medium mt-1">
+                        <svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                        john.c@example.com
+                    </p>
+                    <p class="flex items-center text-sm font-medium mt-1">
+                        <svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 13.5V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H3.5a1.5 1.5 0 0 1 0-3H20"/><path d="M13 14H8"/><path d="M16 18H8"/><path d="M10 6h4"/><path d="M8 21v-3"/></svg>
+                        SID: 19288374643
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex justify-between -mb-12 space-x-2">
+                <div class="bg-white text-pamsucolo-text p-3 rounded-lg text-center w-full shadow-md">
+                    <p class="text-lg font-bold text-pamsucolo-primary">4</p>
+                    <p class="text-xs font-semibold">Total Purchases</p>
+                </div>
+                <div class="bg-white text-pamsucolo-text p-3 rounded-lg text-center w-full shadow-md">
+                    <p class="text-lg font-bold text-pamsucolo-primary">1</p>
+                    <p class="text-xs font-semibold">Loans</p>
+                </div>
+                <div class="bg-white text-pamsucolo-text p-3 rounded-lg text-center w-full shadow-md cursor-pointer hover:bg-gray-50 transition">
+                    <svg class="w-6 h-6 mx-auto mb-1 text-pamsucolo-primary" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.375 22.25c.416.793 1.57.793 1.986 0"/><path d="M12 21a2 2 0 0 0 2-2H10a2 2 0 0 0 2 2z"/></svg>
+                    <p class="text-xs font-semibold">Notifications</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-xl mt-12 space-y-8">
+            
+            <div>
+                <h3 class="text-2xl font-bold mb-4 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-pamsucolo-primary" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    Personal Information
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 text-sm">
+                    <div class="border-b pb-2">
+                        <p class="text-xs uppercase text-gray-500 font-medium">Full Name</p>
+                        <p class="font-semibold text-base">John Carpio Smith</p>
+                    </div>
+                    <div class="border-b pb-2">
+                        <p class="text-xs uppercase text-gray-500 font-medium">Campus</p>
+                        <p class="font-semibold text-base">Sto. Tomas Campus</p>
+                    </div>
+                    <div class="border-b pb-2">
+                        <p class="text-xs uppercase text-gray-500 font-medium">Course</p>
+                        <p class="font-semibold text-base">BS in Information Technology</p>
+                    </div>
+                    <div class="border-b pb-2">
+                        <p class="text-xs uppercase text-gray-500 font-medium">Year & Section</p>
+                        <p class="font-semibold text-base">3rd Year - B</p>
+                    </div>
+                    <a href="#" class="text-pamsucolo-primary font-semibold hover:text-pamsucolo-primary/80 transition mt-2">Edit Details</a>
+                </div>
+            </div>
+
+            <hr class="border-gray-200">
+
+            <div>
+                <h3 class="text-2xl font-bold mb-4 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 mr-2 text-pamsucolo-primary" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                        Recent Orders
+                    </div>
+                    <a href="#" class="text-sm font-semibold text-gray-500 hover:text-pamsucolo-primary transition">View All</a>
+                </h3>
+                
+                <div class="p-4 border rounded-lg shadow-sm mb-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <p class="font-semibold text-lg">Order #1234 - ₱1,500.00</p>
+                        <span class="text-xs font-medium text-teal-600 bg-teal-100 px-2 py-1 rounded-full">Collected</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-4">1x Department Shirt, 2x Lanyards</p>
+
+                    <div class="flex items-center justify-between text-xs sm:text-sm relative pt-2">
+                        <div class="absolute inset-x-0 top-3 h-0.5 bg-gray-200 mx-1"></div>
+                        
+                        <div class="relative flex flex-col items-center w-1/5">
+                            <div class="timeline-dot w-3 h-3 rounded-full z-10"></div>
+                            <span class="text-center mt-2 text-gray-500">Approval</span>
+                        </div>
+                        <div class="relative flex flex-col items-center w-1/5">
+                            <div class="timeline-dot w-3 h-3 rounded-full z-10"></div>
+                            <span class="text-center mt-2 text-pamsucolo-primary font-semibold">Collected</span>
+                            <span class="text-center text-xs text-gray-400">ETA 3 Days</span>
+                        </div>
+                        <div class="relative flex flex-col items-center w-1/5">
+                            <div class="w-3 h-3 rounded-full bg-gray-400 z-10 border-2 border-white"></div>
+                            <span class="text-center mt-2 text-gray-500">On Going</span>
+                        </div>
+                        <div class="relative flex flex-col items-center w-1/5">
+                            <div class="w-3 h-3 rounded-full bg-gray-400 z-10 border-2 border-white"></div>
+                            <span class="text-center mt-2 text-gray-500">Delivered</span>
+                        </div>
+                        <div class="relative flex flex-col items-center w-1/5">
+                            <div class="w-3 h-3 rounded-full bg-gray-400 z-10 border-2 border-white"></div>
+                            <span class="text-center mt-2 text-gray-500">Received</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-gray-200">
+
+            <div>
+                <h3 class="text-2xl font-bold mb-4 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-pamsucolo-primary" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"/><path d="M15 4.9a9 9 0 0 1 3.8 3.8"/><path d="M19.1 12a9 9 0 0 1-3.2 5.9"/><path d="M12 22v-2"/><path d="M4.9 15a9 9 0 0 1-3.8-3.8"/><path d="M2.9 12a9 9 0 0 1 3.2-5.9"/><path d="M10 18h4"/><path d="M10 6h4"/><path d="M16 10v4"/><path d="M6 10v4"/><circle cx="12" cy="12" r="3"/></svg>
+                    Loan Summary
+                </h3>
+                
+                <div class="flex justify-between items-center p-4 bg-yellow-50 border border-yellow-200 rounded-lg mb-2">
+                    <p class="font-semibold">₱5,000.00 Loan</p>
+                    <span class="text-sm font-medium text-yellow-700">Pending</span>
+                </div>
+
+                <div class="flex justify-between items-center p-4 bg-green-50 border border-green-200 rounded-lg mb-2">
+                    <p class="font-semibold">₱2,500.00 Loan</p>
+                    <span class="text-sm font-medium text-green-700">Approved</span>
+                </div>
+                
+                <div class="flex justify-between items-center p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <p class="font-semibold">₱10,000.00 Loan</p>
+                    <span class="text-sm font-medium text-red-700">Declined</span>
+                </div>
+                <a href="loan.html" class="text-pamsucolo-primary font-semibold hover:text-pamsucolo-primary/80 transition block mt-4">View Loan Details & Apply</a>
+            </div>
+
+            <hr class="border-gray-200">
+
+            <div>
+                <h3 class="text-2xl font-bold mb-4 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-pamsucolo-primary" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    Security & Status
+                </h3>
+                
+                <div class="space-y-4">
+                    <div class="p-4 border rounded-lg shadow-sm bg-gray-50">
+                        <h4 class="font-semibold text-lg mb-2">Reset Password</h4>
+                        <p class="text-sm text-gray-600 mb-3">Ensure your account security by changing your password regularly.</p>
+                        <button class="w-full sm:w-auto px-4 py-2 bg-pamsucolo-primary text-white rounded-lg font-medium hover:bg-opacity-90 transition">
+                            Change Password
+                        </button>
+                    </div>
+
+                    <div class="p-4 border rounded-lg shadow-sm bg-green-50 border-green-200">
+                        <h4 class="font-semibold text-lg flex items-center text-green-700">
+                            <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                            Account Status: <span class="ml-2 font-bold">Verified & Active</span>
+                        </h4>
+                        <p class="text-sm text-green-600 mt-1">Your account is fully functional and has no restrictions.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        
+        <div class="mt-8 text-center">
+            <button onclick="window.location.href='login.html'" class="text-red-600 font-semibold hover:text-red-800 transition py-2 px-4 rounded-lg flex items-center mx-auto">
+                <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                Log Out
+            </button>
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
+                
+                <div class="col-span-2 md:col-span-1">
+                    <img class="w-10 h-10" src="images/logo.png" alt="Pampanga State University Logo">
+                    <h4 class="text-2xl font-bold text-pamsucolo-primary mb-3">PamSuCoLo</h4>
+                    <p class="text-sm text-gray-400">Your dedicated on-campus E-commerce solution.</p>
+                    <div class="flex space-x-3 mt-4">
+                        <svg class="w-6 h-6 hover:text-pamsucolo-primary transition duration-300" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.163 3.766 9.475 8.75 10.384V15.25H7.75V12.5H10.75V10.25c0-3.09 1.847-4.78 4.673-4.78 1.334 0 2.48.1 2.82.144V8.5h-1.637c-1.69 0-2.025.803-2.025 1.983V12.5h3.385l-.547 2.75H13.5V22.384C18.234 21.475 22 17.163 22 12c0-5.523-4.477-10-10-10z"></path></svg>
+                        <svg class="w-6 h-6 hover:text-pamsucolo-primary transition duration-300" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 5.862c-.77.34-1.6.57-2.46.68.88-.52 1.55-1.34 1.87-2.32-.82.48-1.73.83-2.69 1.02-.78-.83-1.89-1.35-3.13-1.35-2.35 0-4.26 1.91-4.26 4.26 0 .33.04.65.11.95C7.29 8.07 4.54 6.6 2.7 4.24c-.36.62-.57 1.34-.57 2.12 0 1.48.75 2.79 1.89 3.56-.7-.02-1.35-.21-1.92-.53v.05c0 2.06 1.46 3.77 3.39 4.16-.36.1-.73.15-1.12.15-.27 0-.54-.03-.79-.07.54 1.68 2.1 2.91 3.96 2.94-1.45 1.13-3.28 1.81-5.26 1.81-.34 0-.68-.02-1.02-.06C3.52 19.82 5.89 20 8.35 20c9.96 0 15.39-8.25 15.39-15.39 0-.23-.01-.46-.01-.69.81-.59 1.5-1.33 2.06-2.17z"></path></svg>
+                    </div>
+                </div>
+
+                <div>
+                    <h5 class="font-semibold text-white mb-3 uppercase text-sm">Shop</h5>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-pamsucolo-primary transition">Lanyard</a></li>
+                        <li><a href="#" class="hover:text-pamsucolo-primary transition">Department Shirt</a></li>
+                        <li><a href="#" class="hover:text-pamsucolo-primary transition">Uniform</a></li>
+                        <li><a href="#" class="hover:text-pamsucolo-primary transition">Accessories</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="font-semibold text-white mb-3 uppercase text-sm">Financial</h5>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-pamsucolo-primary transition">Apply for Loan</a></li>
+                        <li><a href="#" class="hover:text-pamsucolo-primary transition">Loan Calculator</a></li>
+                        <li><a href="#" class="hover:text-pamsucolo-primary transition">Payment Options</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="font-semibold text-white mb-3 uppercase text-sm">About</h5>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-pamsucolo-primary transition">About Us</a></li>
+                        <li><a href="#" class="hover:text-pamsucolo-primary transition">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-pamsucolo-primary transition">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center">
+                <p class="text-sm text-gray-500">&copy; 2025 PamSuCoLo. All rights reserved. Built for students.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Simple JavaScript to manage the filter overlay visibility
+        const toggle = document.getElementById('filter-toggle');
+        const overlay = document.getElementById('filter-overlay');
+
+        if(toggle && overlay) { // Check if elements exist (relevant for other pages)
+            toggle.addEventListener('change', function() {
+                if (this.checked) {
+                    overlay.classList.remove('opacity-0', 'pointer-events-none');
+                    overlay.classList.add('opacity-100');
+                } else {
+                    overlay.classList.remove('opacity-100');
+                    overlay.classList.add('opacity-0', 'pointer-events-none');
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
