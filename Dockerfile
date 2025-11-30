@@ -1,14 +1,13 @@
 # ----------------------------------------------------
 # 0. BASE STAGE: Setup PHP, Extensions & Common Tools
 # ----------------------------------------------------
-# We create a 'base' image that holds PHP + pdo_mysql. 
-# Both the 'build' and 'final' stages will inherit from this.
+# This stage installs all PHP extensions (like pdo_mysql) only once.
 FROM php:8.2-fpm-alpine AS base
 
 WORKDIR /var/www/html
 
 # 1. Install Runtime Dependencies (Permanent)
-# These are needed for the app to run (mysql client, bash, libraries)
+# Needed for the application and deployment script (bash, mysql-client, curl)
 RUN apk add --no-cache \
     bash \
     curl \
@@ -20,7 +19,7 @@ RUN apk add --no-cache \
     oniguruma
 
 # 2. Install Build Dependencies (Temporary)
-# These are needed ONLY to compile the PHP extensions
+# These are only needed to compile the PHP extensions
 RUN apk add --no-cache --virtual .build-deps \
     libpng-dev \
     libzip-dev \
@@ -28,12 +27,11 @@ RUN apk add --no-cache --virtual .build-deps \
     oniguruma-dev \
     $PHPIZE_DEPS
 
-# 3. Install PHP Extensions (The Fix)
-# We install pdo_mysql here so it persists in the final image
+# 3. Install PHP Extensions (FIX for 'could not find driver')
+# We install pdo_mysql, zip, gd, and opcache here.
 RUN docker-php-ext-install pdo_mysql zip gd opcache
 
 # 4. Cleanup Build Dependencies
-# Remove the compilers to keep the image small
 RUN apk del .build-deps
 
 # ----------------------------------------------------
@@ -43,7 +41,7 @@ FROM base AS build
 
 WORKDIR /app
 
-# Install Node.js and NPM for the frontend build
+# Install Node.js and NPM (FIX for 'npm: not found')
 RUN apk add --no-cache nodejs npm
 
 # Install Composer
@@ -56,7 +54,6 @@ COPY . .
 RUN composer install --optimize-autoloader --no-dev
 
 # Run Vite/Tailwind build
-# (npm is now guaranteed to exist in this stage)
 RUN npm install
 RUN npm run build
 
@@ -75,10 +72,13 @@ COPY --from=build /app .
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Copy Nginx configuration
+# Copy Nginx main configuration (FIX for 'server directive not allowed')
+COPY conf/nginx/nginx.conf /etc/nginx/nginx.conf
+
+# Copy your server-specific configuration
 COPY conf/nginx/default.conf /etc/nginx/conf.d/default.conf
 
-# Copy deployment script
+# Copy deployment script (FIX for 'bash not found' and running migrations)
 COPY scripts/00-laravel-deploy.sh /usr/local/bin/00-laravel-deploy.sh
 RUN chmod +x /usr/local/bin/00-laravel-deploy.sh
 
