@@ -6,28 +6,30 @@ FROM php:8.2-fpm-alpine AS build
 # Set the working directory
 WORKDIR /app
 
-# Install build dependencies, Node, and necessary PHP extension libs
+# 1. Install PERMANENT dependencies
+# These are needed for the build process (npm) and deployment scripts (bash, git)
+# We do NOT delete these.
+RUN apk add --no-cache \
+    bash \
+    curl \
+    git \
+    mysql-client \
+    nodejs \
+    npm
+
+# 2. Install TEMPORARY build dependencies for PHP extensions
+# We put these in a virtual group so we can delete them later to save space
 RUN apk add --no-cache --virtual .build-deps \
-    # PHP extension build requirements
     libxml2-dev \
     libzip-dev \
     libpng-dev \
-    oniguruma-dev \
-    # Common tools
-    git \
-    curl \
-    # Other tools
-    mysql-client \
-    bash \
-    # FIX: Replace 'nodejs npm' with the single, reliable package name 'nodejs-npm'
-    nodejs-npm \
-    # Temporary fix for a path issue with Node/npm on some Alpine versions
-    && ln -s /usr/bin/npm /usr/bin/node_modules/.bin/npm 
-    
-# Install required PHP extensions (pdo_mysql is the key fix)
+    oniguruma-dev
+
+# 3. Install PHP extensions required by Laravel
 RUN docker-php-ext-install pdo_mysql zip gd opcache
 
-# Remove build dependencies to keep the image smaller after extensions are built
+# 4. Remove the temporary build dependencies (Clean up)
+# Note: We are NOT removing nodejs or npm here because they were installed separately above
 RUN apk del .build-deps
 
 # Install Composer
@@ -36,10 +38,12 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy application source code
 COPY . .
 
-# Install Node dependencies and run the Vite production build
+# 5. Frontend Build
+# Now that Node/NPM are guaranteed to be present:
 RUN npm install
 RUN npm run build
 
+# 6. Backend Build
 # Install Composer dependencies
 RUN composer install --optimize-autoloader --no-dev
 
@@ -51,17 +55,17 @@ FROM php:8.2-fpm-alpine AS final
 # Set the working directory
 WORKDIR /var/www/html
 
-# Install Nginx and other runtime tools
+# Install Nginx and runtime tools (Bash is needed for the script)
 RUN apk add --no-cache \
     nginx \
     curl \
     mysql-client \
-    bash # Include bash here so the deployment script can execute
+    bash
 
 # Copy the built application from the 'build' stage
 COPY --from=build /app .
 
-# Set up Laravel permissions (Crucial!)
+# Set up Laravel permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
@@ -73,5 +77,5 @@ RUN chmod +x /usr/local/bin/00-laravel-deploy.sh
 # Expose the Nginx port
 EXPOSE 8080
 
-# The startup command runs the deployment script, then Nginx and FPM
+# The startup command runs the deployment script
 CMD ["/usr/local/bin/00-laravel-deploy.sh"]
