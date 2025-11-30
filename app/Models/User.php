@@ -2,47 +2,39 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    // ... traits
     protected $fillable = [
         'student_id',
+        'is_admin', // for admin logic
+    ];
+    // ... hidden attributes
+    protected $casts = [
+        'is_admin' => 'boolean',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
+     * Get the student record associated with the user.
      */
-    // protected $hidden = [
-    //     'password',
-    //     'remember_token',
-    // ];
-
-    // /**
-    //  * The attributes that should be cast.
-    //  *
-    //  * @var array<string, string>
-    //  */
-    // protected $casts = [
-    //     'email_verified_at' => 'datetime',
-    // ];
-    public function student(): BelongsTo
+    public function student()
     {
-        // Links this User record back to the Student model using the foreign key 'student_id'
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class, 'student_number', 'student_number');
+    }
+    
+    // Add accessors to retrieve name/email from the Student model
+    public function getNameAttribute()
+    {
+        return optional($this->student)->first_name . ' ' . optional($this->student)->last_name;
+    }
+
+    public function getEmailAttribute()
+    {
+        return optional($this->student)->email;
     }
 }

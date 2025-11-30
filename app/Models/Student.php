@@ -19,7 +19,14 @@ class Student extends Model
         'current_year_level',
         'current_section',
         'email',
-        'password'
+        'password', // Portal password (must be hashed)
     ];
 
+    /**
+     * Get the user account associated with the student.
+     */
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
 }
