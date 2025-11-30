@@ -19,10 +19,11 @@ RUN apk add --no-cache --virtual .build-deps \
     # Other tools
     mysql-client \
     bash \
-    # Node/NPM for frontend build
-    nodejs \
-    npm 
-
+    # FIX: Replace 'nodejs npm' with the single, reliable package name 'nodejs-npm'
+    nodejs-npm \
+    # Temporary fix for a path issue with Node/npm on some Alpine versions
+    && ln -s /usr/bin/npm /usr/bin/node_modules/.bin/npm 
+    
 # Install required PHP extensions (pdo_mysql is the key fix)
 RUN docker-php-ext-install pdo_mysql zip gd opcache
 
