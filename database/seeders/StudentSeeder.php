@@ -39,6 +39,30 @@ class StudentSeeder extends Seeder
                 'email' => 'maria.lopez@example.com',
                 'password' => Hash::make('portalpassword2'),
             ],
+            [
+                'student_number' => '2024511345',
+                'first_name' => 'John Benedict',
+                'middle_name' => 'Sunga',
+                'last_name' => 'Calara',
+                'current_campus' => 'Sto. Tomas',
+                'current_course' => 'BSIT',
+                'current_year_level' => '3rd',
+                'current_section' => 'B',
+                'email' => 'johnbenedict@gmail.com',
+                'password' => Hash::make('benedict123'),
+            ],
+            [
+                'student_number' => '2023445345',
+                'first_name' => 'Charizza',
+                'middle_name' => 'Ramos',
+                'last_name' => 'Flores',
+                'current_campus' => 'San Fernando',
+                'current_course' => 'BSBA',
+                'current_year_level' => '3rd',
+                'current_section' => 'B',
+                'email' => 'chacharizaaflores@outlook.com',
+                'password' => Hash::make('chachaflores24'),
+            ],
         ];
 
         foreach ($students as $student) {

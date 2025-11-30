@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <header class="relative bg-cover bg-center h-96 sm:h-[400px] flex items-center" style="background-image: url('{{ asset('background.png') }}');">
+    <header class="relative bg-cover bg-center h-96 sm:h-[400px] flex items-center mb-20" style="background-image: url('{{ asset('background.png') }}');">
         <div class="absolute inset-0 bg-black opacity-40"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white z-10">
             <div class="bg-white/10 backdrop-blur-sm p-6 sm:p-8 rounded-lg max-w-lg mt-16">

@@ -20,12 +20,34 @@
                     <h2 class="text-xl font-bold mb-4">Add Product</h2>
                     <form action="{{ route('admin.product.store') }}" method="POST" class="space-y-3">
                         @csrf
-                        <input name="image_url" type="url" class="w-full border rounded p-2" placeholder="Image URL">
-                        <input name="name" type="text" class="w-full border rounded p-2" placeholder="Product Name" required>
-                        <input name="type" type="text" class="w-full border rounded p-2" placeholder="Type" required>
-                        <input name="size" type="text" class="w-full border rounded p-2" placeholder="Size (e.g., M, N/A)" required>
-                        <input name="price" type="number" step="0.01" class="w-full border rounded p-2" placeholder="Price" required>
-                        <textarea name="short_description" class="w-full border rounded p-2" placeholder="Short Description"></textarea>
+                        <input name="image_url" type="url" class="custom-focus mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm text-base" placeholder="Image URL">
+                        <input name="name" type="text" class="custom-focus mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm text-base" placeholder="Product Name" required>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label for="product_type" class="block text-sm font-medium text-gray-700">Product Type</label>
+                                <select id="product_type" name="type" required
+                                    class="custom-focus mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm text-base">
+                                    <option value="Lanyard">Lanyard</option>
+                                    <option value="Department Shirt">Department Shirt</option>
+                                    <option value="Uniform">Uniform</option>
+                                    <option value="Accessories">Accessories</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="size" class="block text-sm font-medium text-gray-700">Size</label>
+                                <select id="size" name="size" required
+                                    class="custom-focus mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm text-base">
+                                    <option value="XS">XS</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                    <option value="N/A">N/A (e.g., Lanyard)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input name="price" type="number" step="0.01" class="custom-focus mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm text-base" placeholder="Price" required>
+                        <textarea name="short_description" class="custom-focus mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm text-base" placeholder="Short Description"></textarea>
                         <button type="submit" class="w-full py-2 bg-pamsucolo-primary text-white rounded font-bold">Add Product</button>
                     </form>
                 </div>

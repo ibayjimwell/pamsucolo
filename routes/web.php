@@ -50,6 +50,8 @@ Route::get('/register', [RegisteredUserController::class, 'create'])
 
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
+Route::get('/shop', [ProductController::class, 'index'])->name('shop');
+
 // Auth
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
@@ -87,7 +89,6 @@ Route::put('/password', [PasswordController::class, 'update'])->name('password.u
 
 // Everything else: shop, product, bag, account, admin, checkout...
 Route::middleware('auth')->group(function () {
-    Route::get('/shop', [ProductController::class, 'index'])->name('shop');
     Route::get('/shop/{product}', [ProductController::class, 'show'])->name('product.show');
     Route::get('/bag', [CartController::class, 'index'])->name('cart.index');
     Route::post('/shop/{product}/add', [CartController::class, 'add'])->name('cart.add');
