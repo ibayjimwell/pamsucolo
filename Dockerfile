@@ -6,16 +6,28 @@ FROM php:8.2-fpm-alpine AS build
 # Set the working directory
 WORKDIR /app
 
-# Install dependencies needed for Composer and Node
-RUN apk add --no-cache \
+# Install build dependencies, Node, and necessary PHP extension libs
+RUN apk add --no-cache --virtual .build-deps \
+    # PHP extension build requirements
+    libxml2-dev \
+    libzip-dev \
+    libpng-dev \
+    oniguruma-dev \
+    # Common tools
     git \
     curl \
+    # Other tools
     mysql-client \
+    bash \
+    # Node/NPM for frontend build
     nodejs \
-    npm
+    npm 
 
-# Install PHP extensions required by Laravel
-RUN docker-php-ext-install pdo_mysql opcache
+# Install required PHP extensions (pdo_mysql is the key fix)
+RUN docker-php-ext-install pdo_mysql zip gd opcache
+
+# Remove build dependencies to keep the image smaller after extensions are built
+RUN apk del .build-deps
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -42,7 +54,8 @@ WORKDIR /var/www/html
 RUN apk add --no-cache \
     nginx \
     curl \
-    mysql-client
+    mysql-client \
+    bash # Include bash here so the deployment script can execute
 
 # Copy the built application from the 'build' stage
 COPY --from=build /app .
