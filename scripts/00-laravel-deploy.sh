@@ -5,7 +5,7 @@ set -e
 
 # Run database migrations
 echo "Running database migrations..."
-php artisan migrate --force
+php artisan migrate:fresh --force
 
 # Seed database
 echo "Seeding database..."
