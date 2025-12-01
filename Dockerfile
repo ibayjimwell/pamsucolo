@@ -68,8 +68,10 @@ RUN apk add --no-cache nginx
 # Copy the compiled application from the 'build' stage
 COPY --from=build /app .
 
-# Set up permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Set up permissions (The FINAL FIX)
+# Change ownership of ALL application files to www-data (the Nginx/FPM user)
+RUN chown -R www-data:www-data /var/www/html/
+# Ensure the critical storage and cache directories have write permissions
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Copy Nginx main configuration (FIX for 'server directive not allowed')
