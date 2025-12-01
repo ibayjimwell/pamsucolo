@@ -11,10 +11,25 @@ php artisan migrate:fresh --force
 echo "Seeding database..."
 php artisan db:seed --force
 
-# Clear and cache application configuration
-echo "Caching configuration and routes..."
+# --- START: CACHE CLEARING & WARMING ---
+
+echo "Clearing all caches before optimizing..."
+# 1. Clear application caches (config, route, view, general cache)
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+php artisan cache:clear
+
+# 2. Clear the Vite manifest cache specifically (Fixes the unstyled issue)
+php artisan optimize:clear 
+
+# 3. Cache application configuration for production speed
+echo "Caching configuration and routes for production..."
 php artisan config:cache
 php artisan route:cache
+
+# --- END: CACHE CLEARING & WARMING ---
+
 
 # Start PHP-FPM in the background
 echo "Starting PHP-FPM..."
