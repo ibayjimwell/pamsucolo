@@ -11,7 +11,7 @@ class User extends Authenticatable
 {
     // ... traits
     protected $fillable = [
-        'student_id',
+        'student_number',
         'is_admin', // for admin logic
     ];
     // ... hidden attributes
